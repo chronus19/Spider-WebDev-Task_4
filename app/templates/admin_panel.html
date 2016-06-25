@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel</title>
+
+<style type="text/css">
+th,td{
+	border: 1px solid black;
+	padding:4px;
+}	
+
+table{
+	bor
+}
+
+</style>
+
+</head>
+<body>
+
+
+<div>
+<div style='text-align: right; font-size: 18px;'>
+<a href='/dashboard/'>Dashboard</a>
+<span style='padding-left:20px;'></span>
+<a href='/logout/'>Logout</a>
+</div>
+
+<center>
+<h2>All Users</h2>
+
+<table style="border-collapse: collapse; text-align:center;">
+<thead>
+	<th>Username</th>
+	<th>Name</th>
+	<th>Access Level</th>
+</thead>
+<tbody>
+
+{% for i in users %}
+
+
+
+	<tr>
+     <td> {{ i.username }} </td>
+     <td> {{ i.first_name }} </td>
+     <td> 
+     {% if i.is_superuser == 1 %}
+ 		Admin
+     {% else %}
+     <form method='POST' action='/update_access_level/'>
+          <select name="access_level">
+			<option {% if i.is_superuser == 1 and i.is_staff == 1 %} selected='selected' {% endif %} value="3">Admin</option>
+			<option {% if i.is_superuser == 0 and i.is_staff == 1 %} selected='selected' {% endif %} value="2">Editor</option>
+			<option {% if i.is_staff == 0 %} selected='selected' {% endif %} value="1">Viewer</option>
+					
+	      </select>
+	      {% csrf_token %}
+	      <input type="hidden" name="user_id" value='{{ i.id }}'>
+	      <input type="submit" value='UPDATE' >
+    
+
+	      </form>
+	   {% endif %}
+     </td>
+     
+	</tr>
+
+
+{% endfor %}
+</tbody>
+
+	
+</table>
+
+
+</center>
+
+</div>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard</title>
+
+<style type="text/css">
+th,td{
+	border: 1px solid black;
+	padding:4px;
+}	
+
+#formdiv {
+border: 1px solid black;
+padding:5px;
+margin:auto;
+width:350px;
+
+}
+
+</style>
+
+</head>
+<body>
+<div style='text-align: right; font-size: 18px;'>
+{% if user.is_superuser == 1 %}
+<a href='/admin_panel/'>Admin Panel</a>
+{% endif %}
+<span style='padding-left:20px;'></span>
+<a href='/logout/'>Logout</a>
+</div>
+<center>
+<div>
+<br>
+<h2><u> Welcome {{ user.first_name }} </u> </h2> 
+
+{% if user.is_staff == 1 or user.is_superuser == 1 %} 
+<div id='formdiv'>
+<h3>Add Post</h3>
+<form name='newPost' method='POST' action='/add_post/'>
+	<label for='title'>Title :- </label>
+	<input id='title' type="text" name="title"> <br><br>
+
+	<label for='body'> Body of the Post </label> <br>
+	<textarea id='body' rows='3' cols='30' name="body"> </textarea><br><br>
+    {% csrf_token %}
+	<input type="submit" value='SUBMIT'>
+</form>
+</div>
+{% endif %}
+
+{% if posts|length == 0 %}
+<h3><br> There are no posts. </h3>
+{% else %}
+<h2>All Posts</h2>
+<table style="border-collapse: collapse;">
+<thead>
+<th>User</th>
+<th>Title</th>
+<th>Body</th>
+{% if user.is_superuser == 1 %}
+<th>Options</th>
+{% endif %}
+</thead>
+
+{% for i in posts %}
+<tr>
+<td>{{ i.user }} </td>
+<td>{{ i.title }} </td>
+<td>{{ i.body }}</td>
+{% if user.is_superuser == 1 %}
+<td>
+    <button id='{{ i.id }}' type='button' onclick="delete_post(this)">Delete</button>
+</td>
+{% endif %}
+</tr>
+{% endfor %}
+
+</table>
+{% endif %}
+
+</div>
+</center>
+<script src="/static/js/dashboard.js"></script>
+</body>
+
+</html>
