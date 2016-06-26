@@ -47,16 +47,16 @@ If you have the above requisites, you may follow the given steps :-
         'PORT':'3306',   
 
 3) In your local directory, run the command :-  
-		 python manage.py makemigrations  
+		 python manage.py makemigrations    
 4) In the same directory, run another command :-  
-		 python manage.py migrate    
+		 python manage.py migrate      
 5) To create an admin user, run this command in the local directory :-   
-         python manage.py createsuperuser   
-   Enter the details for the admin user.   
+         python manage.py createsuperuser    
+   Enter the details for the admin user.     
 6) If the above commands are successful, then you are ready to run your server.  
    Run the command :-  
 		 python manage.py runserver  
    (OR)   
-    Run the script runserver.bat (if you are on Windows)  
+    Run the script runserver.bat (if you are on Windows)      
      
 If this executes without errors, then your server is up and running on port 8000. You can view it by opening 'localhost:8000' in your browser. 
