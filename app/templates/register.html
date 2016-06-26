@@ -6,7 +6,7 @@
 <title>Register</title>
 
 <script src="/static/js/register.js"></script>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body style="background-color:lightyellow;">
 <br><br>
@@ -34,6 +34,9 @@
 <label for='repasswd'>Re-enter password :- </label>
 <input type='password' id='repasswd' name='repasswd' /> <br> <br>
 {% csrf_token %}
+
+<div class="g-recaptcha" data-sitekey="6LcRjyMTAAAAABqkNN8WFXyyw_dJ8Tv2DitqZlSv"></div>
+
 </form>
 
 <button type='button' onclick="validate()" > Submit </button>

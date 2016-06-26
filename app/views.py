@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from .models import Post
+from requests import post as post_data
 
 # Create your views here.
 
@@ -101,8 +102,16 @@ def logout(req):
 def register(req):
     if req.method != 'POST':   
         return render(req,'register.html')
-
+    
     data = req.POST
+    
+    verify_human = {'secret': '6LcRjyMTAAAAAFrNgBLvNT3FyuxspwZhXPP_6_Lj' , 'response': data.get('g-recaptcha-response','')}
+    response = post_data('https://www.google.com/recaptcha/api/siteverify',data=verify_human)
+    response = response.json()
+        
+    if response.get('success',False)==False:
+        return redirect(register)
+            
     user = None
     username = data.get('username','')
     name = data.get('name','')
